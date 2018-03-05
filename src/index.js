@@ -1,14 +1,27 @@
 module.exports = function getZerosCount(number, base) {
-  let a = 5, b = 5, c = 0;
-  let int = Math.floor(number / 5);
-  let remain = 0;
-
-  for (let i = 0; i < 10; i++) {
-    c = a * b;
-    a = c;
-    remain += Math.floor(number / c);
+  function getZerosCount(number, simpleNumber) {
+    let zeros = 0;
+    for (let i = 1; Math.floor(number / Math.pow(simpleNumber, i)) !== 0; i++) {
+      zeros += Math.floor(number / Math.pow(simpleNumber, i));
+    }
+    return zeros;
   }
 
-  return Math.round(int + remain);
-  
+  function allDelit(base) {
+    let simpleNumber = 2;
+    let arr = [];
+    while (base !== 1) {
+      if (base % simpleNumber === 0) {
+        base /= simpleNumber;
+        arr.push(simpleNumber);
+      }
+      if (base % simpleNumber !== 0) {
+        simpleNumber++;
+      }
+    }
+    return arr[arr.length - 1];
+  }
+
+  let maxSimple = allDelit(base);
+  return getZerosCount(number, maxSimple);
 }
